@@ -32,7 +32,7 @@ def add_savings(user_id):
         return jsonify({"message": message, "balance": float(wallet.balance)})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
 @wallet_bp.route("/<user_id>/deduct", methods=["POST"])
 def deduct_balance(user_id):
     try:
@@ -53,5 +53,27 @@ def deduct_balance(user_id):
         db.session.commit()
 
         return jsonify({"message": "Payment deducted", "balance": float(wallet.balance)})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@wallet_bp.route("/<user_id>/history", methods=["GET"])
+def get_interest_history(user_id):
+    try:
+        history = Wallet.query.filter_by(user_id=user_id).order_by(Wallet.created_at.desc()).all()
+        if not history:
+            return jsonify({"message": "No interest history found"}), 404
+
+        result = []
+        for record in history:
+            result.append({
+                "interest_id": record.interest_id,
+                "user_id": record.user_id,
+                "balance": float(record.balance),
+                "interest_generated": float(record.interest_generated),
+                "annual_interest": float(record.annual_interest),
+                "created_at": record.created_at.isoformat()
+            })
+
+        return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
