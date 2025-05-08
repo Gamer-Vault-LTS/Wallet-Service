@@ -67,7 +67,7 @@ def get_interest_history(user_id):
         result = []
         for record in history:
             result.append({
-                "interest_id": record.interest_id,
+                "id": record.id,
                 "user_id": record.user_id,
                 "balance": float(record.balance),
                 "interest_generated": float(record.interest_generated),
