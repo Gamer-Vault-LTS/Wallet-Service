@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask , jsonify
 from controllers.wallet_controller import wallet_bp
 from services.db_service import db, init_app 
 from sqlalchemy import text
@@ -12,12 +12,12 @@ init_app(app)
 app.register_blueprint(wallet_bp, url_prefix="/wallet")
 @app.route('/')
 def index():
-    return "Wallet service is up", 200
+    return jsonify({"message": "wallet service is running"}), 200
 
 
 @app.route('/health')
 def health():
-    return 'OK', 200
+    return jsonify({"status": "healthy"}), 200
 
 @app.route('/wallets/health')
 def health_check():
