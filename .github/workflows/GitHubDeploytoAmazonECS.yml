@@ -7,7 +7,7 @@ on:
 env:
     AWS_REGION: us-east-1
     ECR_REPOSITORY: wallet_services_repo
-    ECS_SERVICE: wallet-service
+    ECS_SERVICE: wallet-service-gvgg
     ECS_CLUSTER: main-cluster-gamer-vault-ggeasy
     ECS_TASK_DEFINITION: .aws/main-wallet-service-task-def.json
     CONTAINER_NAME: wallet-task

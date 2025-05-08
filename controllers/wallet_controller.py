@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from models.wallet_model import Wallet
+from models.interest_hisstory import Interest
 from services.db_service import db
 from decimal import Decimal
 
@@ -59,7 +60,7 @@ def deduct_balance(user_id):
 @wallet_bp.route("/<user_id>/history", methods=["GET"])
 def get_interest_history(user_id):
     try:
-        history = Wallet.query.filter_by(user_id=user_id).order_by(Wallet.created_at.desc()).all()
+        history = Interest.query.filter_by(user_id=user_id).order_by(Interest.created_at.desc()).all()
         if not history:
             return jsonify({"message": "No interest history found"}), 404
 
